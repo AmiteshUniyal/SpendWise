@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { generateTokenAndSetCookie } from '../utils/generateToken'
-import User, { UserType } from "../models/user.model";
+import User, { UserDocument } from "../models/user.model";
+import { AuthRequest } from "../middlewares/protectRoute";
 import bcrypt from "bcryptjs";
 
 
@@ -29,7 +30,7 @@ export const login = async (req: loginRequest, res: Response): Promise<void> => 
             return;
         }
 
-        const user = await User.findOne({ username }) as UserType | null;
+        const user : UserDocument | null = await User.findOne({ username });
         
         if (!user || !user.password) {
             res.status(400).json({ error: "Invalid Username or Password" });
@@ -89,7 +90,7 @@ export const signup = async (req: signupRequest, res: Response): Promise<void> =
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newUser = new User({
+        const newUser : UserDocument = new User({
             username,
             email,
             password: hashedPassword,
@@ -108,7 +109,8 @@ export const signup = async (req: signupRequest, res: Response): Promise<void> =
         else {
             res.status(400).json({ error: "Invalid user data" });
         }
-    } catch (error: any) {
+    } 
+    catch (error: any) {
         console.error("Error in signup controller:", error.message);
         res.status(500).json({ error: "Internal server error" });
     }
@@ -141,9 +143,9 @@ export const logout = async (_req: Request, res: Response): Promise<void> => {
 };
 
 
-export const getMe = async (req: Request, res: Response): Promise<void> => {
+export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const user = await User.findById((req as any).user._id).select("-password");
+        const user = await User.findById(req.user?._id).select("-password");
         res.status(200).json(user);
     } 
     catch (error: any) {

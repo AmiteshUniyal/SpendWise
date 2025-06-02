@@ -1,6 +1,6 @@
 import express from "express";
 import { protectRoute } from "../middlewares/protectRoute";
-
+import { getDashboardSummary, getCategoryBreakdown, getMonthlyTrend, getDailyStats, getSpendingAlerts } from "../controllers/dashboard.controllers";
 
 const router = express.Router();
 

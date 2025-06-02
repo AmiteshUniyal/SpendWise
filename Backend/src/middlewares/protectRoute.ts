@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import User, { UserType } from "../models/user.model";
+import User, { UserDocument } from "../models/user.model";
 
 export interface AuthRequest extends Request {
-  user?: UserType;
+  user?: UserDocument;
 }
 
 export const protectRoute = async ( req: AuthRequest, res: Response, next: NextFunction ): Promise<void> => {
   
   try {
-    const token = req.cookies?.jwt;
+    const token = req.cookies?.jwtToken; 
 
     if (!token) {
       res.status(401).json({ error: "Unauthorized: No Token Provided" });

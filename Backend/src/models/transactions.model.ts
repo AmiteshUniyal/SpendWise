@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export interface TransactionType extends Document {
-  _id: mongoose.Types.ObjectId;
+interface TransactionType {
+  userId: mongoose.Types.ObjectId;
   title: string;
   amount: number;
   date: Date;
@@ -11,12 +11,14 @@ export interface TransactionType extends Document {
   updatedAt: Date;
 }
 
-const transactionSchema = new Schema<TransactionType>(
+export type TransactionDocument = TransactionType & Document;
+
+const transactionSchema = new Schema<TransactionDocument>(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: "User",
+      required: true,
     },
     title: {
       type: String,
@@ -44,5 +46,5 @@ const transactionSchema = new Schema<TransactionType>(
   { timestamps: true }
 );
 
-const Transactions = mongoose.model<TransactionType>("Transaction", transactionSchema);
+const Transactions = mongoose.model<TransactionDocument>("Transaction", transactionSchema);
 export default Transactions;
