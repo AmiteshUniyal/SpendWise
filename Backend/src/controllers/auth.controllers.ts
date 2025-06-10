@@ -7,10 +7,10 @@ import bcrypt from "bcryptjs";
 
 interface signupRequest extends Request {
     body: {
-        fullName: string;
         username: string;
         email: string;
         password: string;
+        confirmPassword: string;
     }
 }
 

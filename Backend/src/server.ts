@@ -1,6 +1,7 @@
 import express from "express";
 import helmet from "helmet";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import ConnectDB from "./config/db";
 import authRoutes from "./routes/auth.routes";
@@ -15,9 +16,11 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(helmet());
+app.use(cookieParser());
+app.use(express.urlencoded({extended : true})); 
 app.use(
     cors({
-        origin : "*",
+        origin : "http://localhost:3000",
         methods : ["POST", "GET", "DELETE", "PUT"],
         credentials : true,
     })
