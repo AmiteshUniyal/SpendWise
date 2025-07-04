@@ -5,6 +5,11 @@ interface UserType {
   username: string;
   email: string;
   password: string;
+  income: number;
+  currency: string;
+  goal: string;
+  goalAmount: number;
+  goalSetDate: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,7 +32,26 @@ const userSchema = new Schema<UserDocument>(
     password: {
       type: String,
       required: true,
+    }, 
+    income: {
+      type: Number,
+      default: 0,
     },
+    currency: {
+      type: String,
+      default: "",
+    },
+    goal: {
+      type: String,
+      default: "",
+    },
+    goalAmount:{
+      type: Number,
+      default: 0,
+    },
+    goalSetDate:{
+      type: Date,
+    }
   },
   { timestamps: true }
 );

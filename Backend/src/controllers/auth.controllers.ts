@@ -145,11 +145,32 @@ export const logout = async (_req: Request, res: Response): Promise<void> => {
 
 export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
+
         const user = await User.findById(req.user?._id).select("-password");
+
         res.status(200).json(user);
     } 
     catch (error: any) {
         console.error("Error in getMe controller:", error.message);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+    }
+};
+
+export const saveCreds = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+
+        const updated = await User.findOneAndUpdate(req.user?._id, req.body).select("-password");
+              
+        if (!updated) {
+            res.status(404).json({ message: "Credentials not found" });
+            return;
+        }
+
+        res.status(200).json(updated);
+    } 
+    catch (error: any) {
+        console.error("Error in saveCreds controller:", error.message);
         res.status(500).json({ error: "Internal server error" });
         return;
     }

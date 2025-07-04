@@ -42,13 +42,14 @@ export const createNewTransaction = async (req: AuthRequest, res: Response): Pro
   }
 };
 
+
 export const updateUserTransactions = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
-    const { id } = req.params;
+    const transactionId = req.params.id;
 
     const updated = await Transactions.findOneAndUpdate(
-      { _id: id, userId },
+      { _id: transactionId, userId },
       req.body,
       { new: true }
     );
@@ -68,18 +69,22 @@ export const updateUserTransactions = async (req: AuthRequest, res: Response): P
 export const deleteUserTransaction = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
-    const { id } = req.params;
+    const transactionId = req.params.id;
 
-    const deleted = await Transactions.findOneAndDelete({ _id: id, userId });
+    const deleted = await Transactions.findOneAndDelete({
+      _id: transactionId,
+      userId: userId,
+    });
 
     if (!deleted) {
-      res.status(404).json({ message: "Transaction not found" });
+      res.status(404).json({ message: "Transaction not found or unauthorized" });
       return;
     }
 
     res.status(200).json({ message: "Transaction deleted successfully" });
   } 
   catch (error) {
+    console.error("Error deleting transaction:", error);
     res.status(500).json({ message: "Error deleting transaction", error });
   }
 };

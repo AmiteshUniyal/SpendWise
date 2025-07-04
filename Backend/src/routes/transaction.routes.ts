@@ -7,6 +7,6 @@ const router = express.Router();
 router.get("/all", protectRoute, getUserTransactions);
 router.post("/create", protectRoute, createNewTransaction);
 router.put("/update/:id", protectRoute, updateUserTransactions);
-router.delete("/:id", protectRoute, deleteUserTransaction);
+router.delete("/delete/:id", protectRoute, deleteUserTransaction);
 
 export default router;
