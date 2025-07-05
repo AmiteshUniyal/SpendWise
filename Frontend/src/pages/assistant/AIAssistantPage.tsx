@@ -89,7 +89,7 @@ const AssistantPage: React.FC = () => {
       </div>
 
       {/* Chat Box */}
-      <div className="mt-4 flex flex-col rounded-2xl border bg-white shadow-sm h-[400px] dark:bg-gray-900 dark:border-gray-700">
+      <div className="mt-4 flex flex-col rounded-2xl border bg-white shadow-sm min-h-screen dark:bg-gray-900 dark:border-gray-700">
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message, index) => (
             <div
@@ -131,7 +131,7 @@ const AssistantPage: React.FC = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask your financial question..."
-              className="flex-1 rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400"
+              className="flex-1 w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400"
               disabled={isLoading}
             />
             <button
