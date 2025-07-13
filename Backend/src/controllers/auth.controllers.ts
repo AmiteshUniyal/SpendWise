@@ -117,7 +117,7 @@ export const signup = async (req: signupRequest, res: Response): Promise<void> =
 };
 
 
-export const logout = async (_req: Request, res: Response): Promise<void> => {
+export const logout = (_req: Request, res: Response): void => {
     try {
         res.clearCookie("jwtToken", {
             httpOnly: true,

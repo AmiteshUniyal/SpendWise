@@ -81,7 +81,7 @@ const AssistantPage: React.FC = () => {
   };
 
   return (
-    <div className="min-w-4xl mx-auto">
+    <div className="flex flex-col h-screen min-w-4xl mx-auto">
       {/* Header */}
       <div className="rounded-2xl bg-indigo-600 px-6 py-4 text-white shadow-sm dark:bg-indigo-700">
         <h1 className="text-2xl font-semibold">AI Financial Assistant</h1>
@@ -89,7 +89,7 @@ const AssistantPage: React.FC = () => {
       </div>
 
       {/* Chat Box */}
-      <div className="mt-4 flex flex-col rounded-2xl border bg-white shadow-sm min-h-screen dark:bg-gray-900 dark:border-gray-700">
+      <div className="flex-1 mt-4 flex flex-col rounded-2xl border bg-white shadow-sm dark:bg-gray-900 dark:border-gray-700">
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message, index) => (
             <div
